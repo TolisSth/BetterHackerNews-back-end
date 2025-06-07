@@ -11,7 +11,6 @@ async def scrape():
         response = await client.get(url)
     
     soup = BeautifulSoup(response.text, "html.parser")
-    # TODO: eliminate the numbers, for now I will handle it on the front end
     titles = soup.find_all("td", class_="title")
 
     return {"titles": [title.get_text(strip=True) for title in titles]}
