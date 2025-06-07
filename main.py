@@ -6,14 +6,12 @@ from bs4 import BeautifulSoup
 app = FastAPI()
 url = "https://news.ycombinator.com/"
 
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.get("/titles")
 async def titles():
@@ -35,7 +33,7 @@ async def links():
 
     soup = BeautifulSoup(response.text, "html.parser")
     # Hacker News uses <span> tags instead of <a> tags for links
-    links = soup.find_all("a", class_="span.titleline > a")
+    anchors = soup.select("span.titleline > a")
 
-    return {"links": [link.get_text(strip=True) for link in links]}
-    
+    return {"links": [a["href"] for a in anchors]}
+   
