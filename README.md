@@ -4,4 +4,8 @@ API that was made for a small project called BetterHackerNews. The API only supp
 - Get the links for the mentioned posts
 - get the "subline" content, essentially comments, time, points and author.
 
-### Yes this is a work in progress
+# Set up & run
+- `pip install requirements.txt`
+- `uvicorn main:app --reload`
+
+# Work in progress 
