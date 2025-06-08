@@ -1,3 +1,4 @@
+from enum import IntFlag
 from fastapi import FastAPI
 import httpx
 from fastapi.middleware.cors import CORSMiddleware
@@ -36,4 +37,14 @@ async def links():
     anchors = soup.select("span.titleline > a")
 
     return {"links": [a["href"] for a in anchors]}
-   
+
+@app.get('/sublines')
+async def get_sublines():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    sublines = soup.find_all("span", class_="subline")
+
+    return [subline.get_text(strip=True, separator=" ") for subline in sublines]
+
